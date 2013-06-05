@@ -33,6 +33,8 @@ abstract class ViewerBuilder[A](parent: Composite, style: Int) {
 	val composite = new Composite(parent, SWT.NONE)
 
 	def layout: AbstractColumnLayout
+	
+	def setLayoutData(data: Object): Unit = composite.setLayoutData(data)
 
 	def viewer: ColumnViewer
 	def control: Composite

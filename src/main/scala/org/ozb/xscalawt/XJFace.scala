@@ -50,6 +50,11 @@ import org.eclipse.jface.action.IMenuListener
 import org.eclipse.jface.action.IMenuManager
 import org.eclipse.swt.graphics.Image
 import org.eclipse.jface.resource.ImageDescriptor
+import org.eclipse.jface.action.ToolBarManager
+import org.eclipse.swt.widgets.ToolBar
+import org.eclipse.jface.action.IAction
+import org.ozb.xscalawt.XScalaWT.toolBar
+import org.ozb.xscalawt.XScalaWT.toolBar$
 
 object XJFace {
 	implicit def viewer2XScalaWT[W <: Viewer](viewer: W) = new WidgetX[W](viewer)
@@ -63,7 +68,19 @@ object XJFace {
 	def action(setups: (ExtAction => Any)*)(runFunc: => Unit) = {
 		setupAndReturn(new ExtAction(runFunc), setups: _*)
 	}
-	
+
+	def toolBarManager$[A <: IAction](style: Int = SWT.NONE)(tbmSetups: (ToolBarManager => Any)*)(setups: (ToolBar => Any)*)(actions: A*) = { (parent: Composite) =>
+		val tb = toolBar$(style)(setups: _*)(parent)
+		val toolbarMan = new ToolBarManager(tb)
+		tbmSetups.foreach(_(toolbarMan))
+		actions.foreach(toolbarMan.add(_))
+		toolbarMan.update(true)
+		toolbarMan
+	}
+		
+	def toolBarManager[A <: IAction](tbmSetups: (ToolBarManager => Any)*)(setups: (ToolBar => Any)*)(actions: A*) = 
+			toolBarManager$()(tbmSetups: _*)(setups: _*)(actions: _*)
+
 	def listViewer(setups: (ListViewer => Any)*) = (parent: Composite) =>
 		setupAndReturn(new ListViewer(parent, SWT.BORDER), setups: _*)
 

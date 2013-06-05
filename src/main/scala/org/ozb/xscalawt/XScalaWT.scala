@@ -69,7 +69,7 @@ object XScalaWT {
 	//  }
 
 	def combo(setups: (Combo => Any)*) = { (parent: Composite) =>
-		setupAndReturn(new Combo(parent, SWT.BORDER), setups: _*)
+		setupAndReturn(new Combo(parent, SWT.SINGLE | SWT.BORDER), setups: _*)
 	}
 
 	def coolBar(setups: (CoolBar => Any)*) = { (parent: Composite) =>

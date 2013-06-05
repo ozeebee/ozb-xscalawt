@@ -13,7 +13,6 @@
 package org.ozb.xscalawt
 
 import java.beans.PropertyChangeListener
-
 import org.eclipse.swt.SWT
 import org.eclipse.swt.widgets._
 import org.eclipse.core.databinding.observable.value.IObservableValue
@@ -24,12 +23,18 @@ import org.eclipse.jface.databinding.swt.ISWTObservableValue
 import org.eclipse.core.databinding.DataBindingContext
 import org.eclipse.core.databinding.UpdateValueStrategy
 import org.eclipse.core.databinding.observable.Realm
-
 import XScalaWTAPI._
+import org.eclipse.core.databinding.observable.ChangeEvent
+import org.eclipse.core.databinding.observable.IChangeListener
 
 object XScalaWTBinding {
 	val DBC_KEY = "DBC_KEY"
 
+	implicit def changeListener(func: ChangeEvent => Any): IChangeListener =
+		new IChangeListener {
+			override def handleChange(e: ChangeEvent) = func(e)
+		}
+		
 	/**
 	 * Set the default data biding threading realm and run a function with that
 	 * realm set.

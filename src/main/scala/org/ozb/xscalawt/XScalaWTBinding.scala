@@ -228,6 +228,17 @@ object XScalaWTBinding {
 	}
 	implicit def text2TextObservables(t: Text) = new _TextObservables(t)
 
+	class _ImageObservables(l: Label) {
+		/**
+		 * Returns an observable observing the image attribute of the provided
+		 * <code>control</code>.
+		 *
+		 * @return observable value
+		 */
+		def imageObservable = SWTObservables.observeImage(l)
+	}
+	implicit def label2ImageObservables(l: Label) = new _ImageObservables(l)
+
 	class _LabelObservables(l: Label) {
 		/**
 		 * Returns an observable observing the text attribute of the provided

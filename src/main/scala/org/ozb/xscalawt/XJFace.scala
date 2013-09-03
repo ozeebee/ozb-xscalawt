@@ -32,6 +32,7 @@ import org.eclipse.jface.viewers.OpenEvent
 import org.eclipse.jface.viewers.SelectionChangedEvent
 import org.eclipse.jface.viewers.StructuredViewer
 import org.eclipse.jface.viewers.TableViewer
+import org.eclipse.jface.viewers.CheckboxTableViewer
 import org.eclipse.jface.viewers.TableViewerColumn
 import org.eclipse.jface.viewers.TreeExpansionEvent
 import org.eclipse.jface.viewers.TreeViewer
@@ -44,6 +45,7 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.SWT
 import XScalaWTAPI._
 import org.ozb.xscalawt.viewers.TableViewerBuilder
+import org.ozb.xscalawt.viewers.CheckboxTableViewerBuilder
 import org.ozb.xscalawt.viewers.TreeViewerBuilder
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.IMenuListener
@@ -109,6 +111,14 @@ object XJFace {
 	}
 	
 	def tableViewerBuilder[A](setups: (TableViewerBuilder[A] => Any)*)(viewerSetups: (TableViewer => Any)*) = tableViewerBuilder$()(setups: _*)(viewerSetups: _*)
+
+	def checkboxTableViewerBuilder$[A](style: Int = SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER)
+			(setups: (CheckboxTableViewerBuilder[A] => Any)*)(viewerSetups: (CheckboxTableViewer => Any)*) = (parent: Composite) => {
+		val builder = setupAndReturn(new CheckboxTableViewerBuilder[A](parent, style), setups: _*)
+		val viewer = builder.viewer
+		viewerSetups.foreach(_(viewer))
+		builder
+	}
 
 	def treeViewerBuilder$[A](style: Int = SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER)
 			(setups: (TreeViewerBuilder[A] => Any)*)(viewerSetups: (TreeViewer => Any)*) = (parent: Composite) => {

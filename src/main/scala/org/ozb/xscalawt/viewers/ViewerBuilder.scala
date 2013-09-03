@@ -21,6 +21,7 @@ import org.eclipse.jface.viewers.TableViewer
 import org.eclipse.jface.viewers.TreeViewer
 import org.eclipse.jface.layout.TreeColumnLayout
 import org.eclipse.swt.events.SelectionListener
+import org.eclipse.jface.viewers.CheckboxTableViewer
 
 /**
  * Base class for Table/TreeViewerBuilder
@@ -59,6 +60,23 @@ class TableViewerBuilder[A](parent: Composite, style: Int, useHashLookup: Boolea
 
 	def createColumn[B](getter: A => B, header: String): TableViewerColumnBuilder[A, B] =
 		new TableViewerColumnBuilder(this, getter, header)
+}
+
+class CheckboxTableViewerBuilder[A](parent: Composite, style: Int, useHashLookup: Boolean = true, headerVisible: Boolean = true, linesVisible: Boolean = true) extends ViewerBuilder[A](parent, style) {
+	val viewer: CheckboxTableViewer = CheckboxTableViewer.newCheckList(composite, style)
+	val table = viewer.getTable
+	def control = table
+	val sortSelectionListener = new TableSortSelectionListener(viewer)
+
+	val layout: TableColumnLayout = new TableColumnLayout
+	composite.setLayout(layout)
+	table.setHeaderVisible(headerVisible)
+	table.setLinesVisible(linesVisible)
+	viewer.setUseHashlookup(useHashLookup)
+	viewer.setComparator(new SortColumnComparator)
+
+	def createColumn[B](getter: A => B, header: String): CheckboxTableViewerColumnBuilder[A, B] =
+		new CheckboxTableViewerColumnBuilder(this, getter, header)
 }
 
 class TreeViewerBuilder[A](parent: Composite, style: Int, useHashLookup: Boolean = true, headerVisible: Boolean = true, linesVisible: Boolean = true) extends ViewerBuilder[A](parent, style) {

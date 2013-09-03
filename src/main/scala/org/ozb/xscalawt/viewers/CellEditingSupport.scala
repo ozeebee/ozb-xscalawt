@@ -29,6 +29,6 @@ class CellEditingSupport[A, B](viewer: ColumnViewer, editor: CellEditor, valueGe
   
   def setValue(element: AnyRef, value: AnyRef) {
     valueSetter(element.asInstanceOf[A], editorValueGetter(value))
-    viewer.refresh(element)
+    viewer.update(element, null)
   }
 }

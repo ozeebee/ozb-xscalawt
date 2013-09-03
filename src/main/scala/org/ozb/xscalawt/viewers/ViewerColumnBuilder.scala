@@ -174,6 +174,34 @@ class TableViewerColumnBuilder[A, B](builder: TableViewerBuilder[A], valueGetter
 	}
 }
 
+class CheckboxTableViewerColumnBuilder[A, B](builder: CheckboxTableViewerBuilder[A], valueGetter: A => B, header: String) extends ViewerColumnBuilder[A, B](builder, valueGetter, header) {
+	type Column = TableViewerColumn
+
+	def createColumn() = new TableViewerColumn(builder.viewer, _align)
+
+	def baseColumn(column: Column) = column.getColumn
+
+	def makeColumnSortable(column: Column, ord: Ordering[B]) {
+		val tableColumn = column.getColumn
+		val upcastOrd = ord.on[Any](x => valueGetter(x.asInstanceOf[A]))
+		tableColumn.setData(SortColumnComparator.SORT_BY, upcastOrd)
+		tableColumn.addSelectionListener(builder.sortSelectionListener)
+		if (_defaultSort) {
+			builder.table.setSortColumn(tableColumn)
+			builder.table.setSortDirection(SWT.UP)
+		}
+	}
+
+	def build(setups: (TableColumn => Any)*) = {
+		val column = createColumn()
+		afterColumnCreated(column)
+		val tableColumn = column.getColumn
+		tableColumn.setResizable(_resizable)
+		setups.foreach(_(tableColumn))
+		column
+	}
+}
+
 class TreeViewerColumnBuilder[A, B](builder: TreeViewerBuilder[A], valueGetter: A => B, header: String) extends ViewerColumnBuilder[A, B](builder, valueGetter, header) {
 	type Column = TreeViewerColumn
 

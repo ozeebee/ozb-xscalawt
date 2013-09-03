@@ -64,9 +64,9 @@ object XScalaWT {
 		setupAndReturn(new CBanner(parent, SWT.NONE), setups: _*)
 	}
 
-	//  def cCombo(setups:(CCombo => Any)*) = { (parent : Composite) =>
-	//    setup(new CCombo(parent, SWT.BORDER), setups : _*)
-	//  }
+//	def cCombo(setups:(CCombo => Any)*) = { (parent : Composite) =>
+//		setupAndReturn(new CCombo(parent, SWT.BORDER | SWT.FLAT), setups : _*)
+//	}
 
 	def combo(setups: (Combo => Any)*) = { (parent: Composite) =>
 		setupAndReturn(new Combo(parent, SWT.SINGLE | SWT.BORDER), setups: _*)
@@ -148,6 +148,10 @@ object XScalaWT {
 		setupAndReturn(new SashForm(parent, SWT.NONE), setups: _*)
 	}
 
+	def sashFormVertical(setups: (SashForm => Any)*) = { (parent: Composite) =>
+		setupAndReturn(new SashForm(parent, SWT.VERTICAL), setups: _*)
+	}
+	
 	def scaleHorizontal(setups: (Scale => Any)*) = { (parent: Composite) =>
 		setupAndReturn(new Scale(parent, SWT.HORIZONTAL), setups: _*)
 	}
@@ -239,13 +243,13 @@ object XScalaWT {
 	//    setup(new TableTree(parent, SWT.BORDER), setups : _*)
 	//  }
 
-	def text(setups: (Text => Any)*)(parent: Composite) = {
-		setupAndReturn(new Text(parent, SWT.BORDER), setups: _*)
+	def text$(style: Int = SWT.BORDER)(setups: (Text => Any)*)(parent: Composite) = {
+		setupAndReturn(new Text(parent, style), setups: _*)
 	}
+	
+	def text(setups: (Text => Any)*)(parent: Composite) = text$(SWT.BORDER)(setups: _*)(parent)
 
-	def textPasswd(setups: (Text => Any)*)(parent: Composite) = {
-		setupAndReturn(new Text(parent, SWT.BORDER | SWT.PASSWORD), setups: _*)
-	}
+	def textPasswd(setups: (Text => Any)*)(parent: Composite) = text$(SWT.BORDER | SWT.PASSWORD)(setups: _*)(parent) 
 
 	def toolBar$(style: Int = SWT.NONE)(setups: (ToolBar => Any)*) = { (parent: Composite) =>
 		setupAndReturn(new ToolBar(parent, style), setups: _*)
@@ -435,6 +439,10 @@ object XScalaWT {
 		def selection_=[T <: { def setSelection(value: Int) }](value: Int) =
 			(subject: T) => subject.setSelection(value)
 		
+		def tooltip(implicit ev: Nothing) = nothing	
+		def tooltip_=[T <: { def setToolTipText(value: String) }](value: String) =
+			(subject: T) => subject.setToolTipText(value)
+			
 		def topRight(implicit ev: Nothing) = nothing
 //		def topRight_=[T <: { def setTopRight(control: Control) }](control: Control) = {
 //			(subject: T) => subject.setTopRight(control)	

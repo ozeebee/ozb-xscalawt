@@ -60,6 +60,10 @@ object XScalaWT {
 		setupAndReturn(new Button(parent, SWT.CHECK), setups: _*)
 	}
 	
+	def radioButton(setups: (Button => Any)*) = { (parent: Composite) =>
+		setupAndReturn(new Button(parent, SWT.RADIO), setups: _*)
+	}
+	
 	def cBanner(setups: (CBanner => Any)*) = { (parent: Composite) =>
 		setupAndReturn(new CBanner(parent, SWT.NONE), setups: _*)
 	}

@@ -1,6 +1,6 @@
 # ozb-xscalawt
 
-Fork of pieceoftheloaf's [XScalaWT](http://pieceoftheloaf.github.io/XScalaWT/) project which is a Scala DSL for Eclipse RCP and SWT applications.
+Fork of coconutpalm's [XScalaWT](https://github.com/coconutpalm/XScalaWT) project which is a Scala DSL for Eclipse RCP and SWT applications.
 
 This fork mainly adds missing build functions for some UI elements.
 
@@ -17,15 +17,15 @@ Steps:
 
 1. modify [build.sbt](build.sbt) and adapt the url of the swt lib to your platform (Mac OS X by default)
 
-```
-/** URL of the Eclipse update site */
-eclipseUpdateSite := "http://eclipse.ialto.org/eclipse/updates/3.7/R-3.7.2-201202080800/"
-
-/** URL to the swt lib to compile against (adapt it to your platform, mine is Mac OS X) */
-swtNativeUrl <<= eclipseUpdateSite { _ + "plugins/org.eclipse.swt.cocoa.macosx_3.7.2.v3740f.jar" }
-
-```
+	```
+	/** URL of the Eclipse update site */
+	eclipseUpdateSite := "http://eclipse.ialto.org/eclipse/updates/3.7/R-3.7.2-201202080800/"
 	
+	/** URL to the swt lib to compile against (adapt it to your platform, mine is Mac OS X) */
+	swtNativeUrl <<= eclipseUpdateSite { _ + "plugins/org.eclipse.swt.cocoa.macosx_3.7.2.v3740f.jar" }
+
+	```
+
 2. run sbt and install eclipse jars
 
 	`> install-eclipse-jars withSources=true`

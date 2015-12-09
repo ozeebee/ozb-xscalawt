@@ -1,0 +1,54 @@
+= ozb-xscalawt
+
+Fork of coconutpalm's https://github.com/coconutpalm/XScalaWT[XScalaWT^] project which is a Scala DSL for creating Eclipse RCP and SWT applications.
+
+This fork mainly offers:
+
+* an sbt build (instead of Maven)
+* missing build functions for some UI elements
+
+== Eclipse dependencies
+
+Eclipse dependencies are stored in http://www.eclipse.org/equinox/p2/[p2^] repositories which are *not* compatible with standard Maven/Ivy repositories.
+
+The https://eclipse.org/tycho/[Eclipse Tycho^] project provides a set of Maven plugins for building Eclipse components with Maven.
+
+Unfortunately there is no equivalent for sbt.
+
+As a work-around, I have created an sbt task that downloads and installs the required artifacts in the local ivy repository; see below for details.
+
+== Building and publishing locally
+
+The current build compiles against Eclipse 4.5.1 (_Eclipse Mars Release 1_) libraries.
+
+The first thing you'll probably want to do is to check the https://github.com/ozeebee/ozb-xscalawt/blob/master/build.sbt[build.sbt] file to see if the SWT library matches your OS (Mac/Win/Linux); OS X is selected by default.
+
+NOTE: You have to change the SWT library in two places: in the `libraryDependencies` and in the `eclipseLibs`.
+
+Next step is to download and install the Eclipse libraries in your local repository with the provided task:
+
+	> installEclipseJars 
+
+TIP: you can also install the sources with the optional `withSources=true` argument
+
+You should now be able to compile and publish `xscalawt` in your local repository so that you can use it in your own projects:
+
+	> publishLocal
+
+
+== Using in other projects
+
+First, publish the library as described above, then add the following dependency in your build:
+
+	"org.ozb" %% "ozb-xscalawt" % "0.2"
+
+You will also have to include Eclipse libraries; see `libraryDependencies` in https://github.com/ozeebee/ozb-xscalawt/blob/master/build.sbt[build.sbt]
+
+== Example project
+
+The https://github.com/ozeebee/ozb-xscalawt/tree/master/example[example] directory contains an example project using `xscalawt`.
+Check the readme for more info.
+
+== Acknowledgments
+
+Credits go to https://github.com/coconutpalm[Dave Orme^] for the original https://github.com/coconutpalm/XScalaWT[XScalaWT] library.

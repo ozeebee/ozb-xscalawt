@@ -2,40 +2,51 @@ organization := "org.ozb"
 
 name := "ozb-xscalawt"
 
-version := "0.1"
+version := "0.2"
 
-scalaVersion := "2.9.3"
+scalaVersion := "2.11.7"
 
 libraryDependencies ++= Seq(
-	"org.eclipse.jface" % "jface" % "3.7.0",
-	"org.eclipse.equinox" % "equinox-common" % "3.6.0",
-	"org.eclipse.core" % "core-databinding" % "1.4.0",
-	"org.eclipse.core" % "core-commands" % "3.6.0",
-	"org.eclipse.core" % "core-databinding-observable" % "1.4.0",
-	"org.eclipse.core" % "core-databinding-beans" % "1.2.100",
-	"org.eclipse.jface" % "jface-databinding" % "1.5.0",
-	"org.eclipse.core" % "core-databinding-property" % "1.4.0"
-	// Note : the SWT native library will be downloaded and placed in to /lib on first update.
-	//        To this end, set the "swtNativeUrl" setting value
+	"org.eclipse.jface" % "jface" % "3.11.0",
+	"org.eclipse.jface" % "jface-databinding" % "1.7.0",
+	"org.eclipse.equinox" % "equinox-common" % "3.7.0",
+	"org.eclipse.core" % "core-databinding" % "1.5.0",
+	"org.eclipse.core" % "core-databinding-observable" % "1.5.0",
+	"org.eclipse.core" % "core-databinding-beans" % "1.3.0",
+	"org.eclipse.core" % "core-databinding-property" % "1.5.0",
+	"org.eclipse.core" % "core-commands" % "3.7.0",
+	// Mac OS X SWT lib
+	"org.eclipse.swt"  % "swt-cocoa-macosx-x86_64" % "3.104.1"
+	// Windows SWT lib
+	//"org.eclipse.swt"  % "swt-win32-win32-x86_64" % "3.104.1"
+	// Linux SWT lib
+	//"org.eclipse.swt"  % "swt-gtk-linux-x86_64" % "3.104.1"
 )
 
 scalacOptions ++= Seq("-deprecation")
 
 /** URL of the Eclipse update site */
-eclipseUpdateSite := "http://eclipse.ialto.org/eclipse/updates/3.7/R-3.7.2-201202080800/"
-
-/** URL to the swt lib to compile against (adapt it to your platform, mine is Mac OS X) */
-swtNativeUrl <<= eclipseUpdateSite { _ + "plugins/org.eclipse.swt.cocoa.macosx_3.7.2.v3740f.jar" }
+eclipseUpdateSite := "http://download.eclipse.org/eclipse/updates/4.5/R-4.5.1-201509040015/"
 
 /** URLs of the required eclipse libs that will be downloaded from the eclipse
  update site and installed in the local ivy repository */
 eclipseLibs := Seq(
-	"org.eclipse.jface_3.7.0.v20110928-1505.jar",
-	"org.eclipse.equinox.common_3.6.0.v20110523.jar",
-	"org.eclipse.core.databinding_1.4.0.I20110111-0800.jar",
-	"org.eclipse.core.commands_3.6.0.I20110111-0800.jar",
-	"org.eclipse.core.databinding.observable_1.4.0.I20110222-0800.jar",
-	"org.eclipse.core.databinding.beans_1.2.100.I20100824-0800.jar",
-	"org.eclipse.jface.databinding_1.5.0.I20100907-0800.jar",
-	"org.eclipse.core.databinding.property_1.4.0.I20110222-0800.jar"
+	// Eclipse Mars Release 1 (4.5.1)
+	"org.eclipse.jface_3.11.0.v20150602-1400.jar",
+	"org.eclipse.jface.databinding_1.7.0.v20150406-2148.jar",
+	"org.eclipse.equinox.common_3.7.0.v20150402-1709.jar",
+	"org.eclipse.core.databinding_1.5.0.v20150422-0725.jar",
+	"org.eclipse.core.databinding.observable_1.5.0.v20150422-0725.jar",
+	"org.eclipse.core.databinding.beans_1.3.0.v20150422-0725.jar",
+	"org.eclipse.core.databinding.property_1.5.0.v20150422-0725.jar",
+	"org.eclipse.core.commands_3.7.0.v20150422-0725.jar",
+	// Mac OS X SWT lib
+	"org.eclipse.swt.cocoa.macosx.x86_64_3.104.1.v20150825-0743.jar"
+	// Windows SWT lib
+	//"org.eclipse.swt.win32.win32.x86_64_3.104.1.v20150825-0743.jar"
+	// Linux SWT lib
+	//"org.eclipse.swt.gtk.linux.x86_64_3.104.1.v20150825-0743.jar"
 )
+
+// allow republishing
+isSnapshot := true

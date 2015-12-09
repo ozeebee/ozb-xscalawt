@@ -969,34 +969,14 @@ object XScalaWT {
 		}
 	}
 
-	import scala.parallel.Future // Or java.util.concurrent.Future?
+	import scala.concurrent.Future
+	import scala.concurrent.Promise
+	import scala.util.Try
 	def asyncEvalInUIThread[A](f: => A)(implicit d: Display): Future[A] = {
-		val future = new Future[A] {
-			import java.util.concurrent.CountDownLatch
-
-			private val latch = new CountDownLatch(1)
-			@volatile private var result: Option[Either[Throwable, A]] = None
-
-			def isDone = result.isDefined
-
-			def apply() = {
-				if (!isDone) { latch.await() }
-
-				result.get match {
-					case Left(e) => throw e
-					case Right(res) => res
-				}
-			}
-
-			def begin() {
-				d.asyncExec {
-					result = Some(allCatch.either(f))
-					latch.countDown()
-				}
-			}
+		val p = Promise[A]()
+		d.asyncExec {
+			p.complete(Try(f))
 		}
-
-		future.begin()
-		future
+		p.future
 	}
 }

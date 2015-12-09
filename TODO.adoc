@@ -1,0 +1,6 @@
+== TODO
+
+* [ ] fix all warnings (deprecated code)
+* [ ] check whether the dependencies are already present in the local repo before downloading and installing them
+* [ ] refactor the custom ivy installer code to use sbt api (if that's possible)
+* [ ] investigate https://github.com/digimead/sbt-osgi-manager

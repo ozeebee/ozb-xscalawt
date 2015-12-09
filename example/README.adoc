@@ -1,0 +1,11 @@
+= ozb-xscalawt-example
+
+This is an example project to see https://github.com/ozeebee/ozb-xscalawt[ozb-xscalawt^] in action.
+
+== Steps
+
+. Install https://github.com/ozeebee/ozb-xscalawt[ozb-xscalawt^] and Eclipse libraries in your local repository
+. Configure the https://github.com/ozeebee/ozb-xscalawt/blob/master/example/build.sbt[build.sbt] file to use the correct SWT library for your OS (Mac OS X by default)
+. Compile and run with sbt
+
+If everything goes well you should see a window with a simple label and a button.

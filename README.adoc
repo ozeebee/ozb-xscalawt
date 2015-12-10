@@ -38,11 +38,28 @@ You should now be able to compile and publish `xscalawt` in your local repositor
 
 == Using in other projects
 
-First, publish the library as described above, then add the following dependency in your build:
+First, publish the library as described above, then add the following dependency in your build. 
+
+==== SBT ====
 
 	"org.ozb" %% "ozb-xscalawt" % "0.2"
 
 You will also have to include Eclipse libraries; see `libraryDependencies` in https://github.com/ozeebee/ozb-xscalawt/blob/master/build.sbt[build.sbt]
+
+==== Maven ====
+
+    <dependency>
+      <groupId>org.ozb</groupId>
+      <artifactId>ozb-xscalawt</artifactId>
+      <version>0.2</version>
+      <scope>system</scope>
+      <systemPath>${user.home}/.ivy2/local/org.ozb/ozb-xscalawt_2.11/0.2/jars/ozb-xscalawt_2.11.jar</systemPath>
+    </dependency>
+    
+You will also need to include Eclipse libraries in your project that are compatible with those used by ozb-xscalawt;
+see Tycho above; see `libraryDependencies` in https://github.com/ozeebee/ozb-xscalawt/blob/master/build.sbt[build.sbt] 
+for a list of required libraries.
+
 
 == Example project
 
